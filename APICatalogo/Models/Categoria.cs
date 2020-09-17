@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace APICatalogo.Models
 {
    
-    [Table("Categoria")]
+    [Table("Categorias")]
     public class Categoria
     {
 

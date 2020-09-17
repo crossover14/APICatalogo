@@ -2,11 +2,11 @@
 
 namespace APICatalogo.Migrations
 {
-    public partial class Populadb : Migration
+    public partial class Pupuladb : Migration
     {
         protected override void Up(MigrationBuilder mb)
         {
-            mb.Sql("Insert into Categorias(Nome,ImagemUrl) Values('Bebidas', " + " 'http://www.macoratti.net/imagens/1.jpg' )");
+            mb.Sql("Insert into Categorias(Nome, ImagemUrl) Values('Bebidas','http://www.macoratti.net/Imagens/1.jpg')");
             mb.Sql("Insert into Categorias(Nome, ImagemUrl) Values('Lanches','http://www.macoratti.net/Imagens/2.jpg')");
             mb.Sql("Insert into Categorias(Nome, ImagemUrl) Values('Sobremesas','http://www.macoratti.net/Imagens/3.jpg')");
 
@@ -19,13 +19,12 @@ namespace APICatalogo.Migrations
             mb.Sql("Insert into Produtos(Nome,Descricao,Preco,ImagemUrl,Estoque,DataCadastro,CategoriaId) " +
                                 "Values('Pudim 100 g','Pudim de leite condensado 100g',6.75,'http://www.macoratti.net/Imagens/pudim.jpg',20,now(),(Select CategoriaId from Categorias where Nome='Sobremesas'))");
 
-
         }
 
         protected override void Down(MigrationBuilder mb)
         {
-            mb.Sql("Delete From Categorias");
-            mb.Sql("Delete From Produtos");
+            mb.Sql("Delete from Categorias");
+            mb.Sql("Delete from Produtos");
         }
     }
 }

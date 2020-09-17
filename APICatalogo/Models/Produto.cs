@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace APICatalogo.Models
 {
-    [Table("Produto")]
+    [Table("Produtos")]
     public class Produto
     {
         [Key]
