@@ -29,4 +29,5 @@ namespace APICatalogo.Models
         public Categoria Categoria { get; set; }
         public int CategoriaId { get; set; }
     }
+ 
 }
