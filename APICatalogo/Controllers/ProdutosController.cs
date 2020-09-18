@@ -21,6 +21,8 @@ namespace APICatalogo.Controllers
             _context = contexto;
         }
 
+
+
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {

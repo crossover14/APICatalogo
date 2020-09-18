@@ -1,106 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using APICatalogo.Contexto;
+using APICatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using APICatalogo.Contexto;
-using APICatalogo.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace APICatalogo.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
     {
+
+
         private readonly AppDbContext _context;
-
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(AppDbContext contexto)
         {
-            _context = context;
+            _context = contexto;
         }
 
-        
+        [HttpGet("produtos")]
+        public ActionResult<IEnumerable<Categoria>> GetCategoriasprodutos()
+        {
+            return _context.Categorias.Include(x=> x.Produtos).ToList();
+        }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategorias()
+        public ActionResult<IEnumerable<Categoria>> Get()
         {
-            return await _context.Categorias.ToListAsync();
+            return _context.Categorias.AsNoTracking().ToList();
         }
 
-        
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Categoria>> GetCategoria(int id)
+        [HttpGet("{id}", Name = "ObterCategoria")]
+        public ActionResult<Categoria> Get(int id)
         {
-            var categoria = await _context.Categorias.FindAsync(id);
-
+            var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(p => p.CategoriaId == id);
             if (categoria == null)
             {
                 return NotFound();
             }
-
             return categoria;
         }
 
-        
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategoria(int id, Categoria categoria)
+        [HttpPost]
+        public ActionResult Post([FromBody]Categoria categoria)
         {
+            // if (!ModelState.IsValid)
+            // {
+            //     return BadRequest(ModelState);
+            // }
+
+            _context.Categorias.Add(categoria);
+            _context.SaveChanges();
+            return new CreatedAtRouteResult("ObterCategoria",
+                new { id = categoria.CategoriaId }, categoria);
+        }
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody] Categoria categoria)
+        {
+            //if(!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             if (id != categoria.CategoriaId)
             {
                 return BadRequest();
             }
 
             _context.Entry(categoria).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoriaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            _context.SaveChanges();
+            return Ok();
         }
 
-       
-        [HttpPost]
-        public async Task<ActionResult<Categoria>> PostCategoria(Categoria categoria)
-        {
-            _context.Categorias.Add(categoria);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCategoria", new { id = categoria.CategoriaId }, categoria);
-        }
-
-       
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Categoria>> DeleteCategoria(int id)
+        public ActionResult<Categoria> Delete(int id)
         {
-            var categoria = await _context.Categorias.FindAsync(id);
-            if (categoria == null)
+            var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
+            if (id != categoria.CategoriaId)
             {
-                return NotFound();
+                return BadRequest();
+
             }
-
             _context.Categorias.Remove(categoria);
-            await _context.SaveChangesAsync();
-
+            _context.SaveChanges();
             return categoria;
-        }
 
-        private bool CategoriaExists(int id)
-        {
-            return _context.Categorias.Any(e => e.CategoriaId == id);
+
+
         }
     }
 }
