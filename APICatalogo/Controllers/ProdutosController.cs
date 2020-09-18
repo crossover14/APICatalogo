@@ -21,8 +21,14 @@ namespace APICatalogo.Controllers
             _context = contexto;
         }
 
+        //Api/Produtos
+        [HttpGet("primeiro")]
+        public ActionResult<Produto> Get2()
+        {
+            return _context.Produtos.FirstOrDefault();
+        }
 
-
+        //Api/Produtos
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
