@@ -22,7 +22,7 @@ namespace APICatalogo.Controllers
         }
 
         //Api/Produtos
-        [HttpGet("primeiro")]
+        [HttpGet("/primeiro")]
         public ActionResult<Produto> Get2()
         {
             return _context.Produtos.FirstOrDefault();
@@ -35,9 +35,10 @@ namespace APICatalogo.Controllers
             return _context.Produtos.AsNoTracking().ToList();
         }
 
-        [HttpGet("{id}", Name = "ObterProduto")]
-        public ActionResult<Produto> Get(int id)
+        [HttpGet("{id}/{param2=Mac}", Name = "ObterProduto")]
+        public ActionResult<Produto> Get(int id, string param2)
         {
+            var meuParametro = param2;
             var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
             if (produto == null)
             {
