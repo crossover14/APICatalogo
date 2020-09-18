@@ -13,14 +13,14 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        
-        
+
+
         private readonly AppDbContext _context;
         public ProdutosController(AppDbContext contexto)
         {
             _context = contexto;
         }
-        
+
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
@@ -39,7 +39,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody]Produto produto) 
+        public ActionResult Post([FromBody]Produto produto)
         {
             // if (!ModelState.IsValid)
             // {
@@ -48,8 +48,42 @@ namespace APICatalogo.Controllers
 
             _context.Produtos.Add(produto);
             _context.SaveChanges();
-            return new CreatedAtRouteResult("ObterProduto", 
-                new { id=produto.ProdutoId}, produto);
+            return new CreatedAtRouteResult("ObterProduto",
+                new { id = produto.ProdutoId }, produto);
+        }
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody] Produto produto)
+        {
+            // if (!ModelState.IsValid)
+            // {
+            //     return BadRequest(ModelState);
+            // }
+            if (id != produto.ProdutoId)
+            {
+                return BadRequest();
+
+            }
+            _context.Entry(produto).State = EntityState.Modified;
+            _context.SaveChanges();
+            return Ok();
+
+
+        }
+        [HttpDelete("{id}")]
+        public ActionResult<Produto> Delete(int id)
+        {
+            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+            if (id != produto.ProdutoId)
+            {
+                return BadRequest();
+
+            }
+            _context.Produtos.Remove(produto);
+            _context.SaveChanges();
+            return produto;
+
+
+
         }
     }
 }
