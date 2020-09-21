@@ -28,17 +28,17 @@ namespace APICatalogo.Controllers
             return _context.Produtos.FirstOrDefault();
         }
 
-        //Api/Produtos
+        //Api/Produtos/1
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
             return _context.Produtos.AsNoTracking().ToList();
         }
 
-        [HttpGet("{id}/{param2=Mac}", Name = "ObterProduto")]
-        public ActionResult<Produto> Get(int id, string param2)
+        [HttpGet("{id:int:min(1)}", Name = "ObterProduto")]
+        public ActionResult<Produto> Get(int id)
         {
-            var meuParametro = param2;
+           
             var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
             if (produto == null)
             {
