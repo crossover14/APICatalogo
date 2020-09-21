@@ -28,7 +28,7 @@ namespace APICatalogo.Controllers
             return _context.Produtos.FirstOrDefault();
         }
 
-        //Api/Produtos/1
+        //Api/Produtos/1/
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
