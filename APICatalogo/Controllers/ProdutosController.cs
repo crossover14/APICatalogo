@@ -1,4 +1,5 @@
 ﻿using APICatalogo.Contexto;
+using APICatalogo.Filter;
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ namespace APICatalogo.Controllers
 
         //Api/Produtos/1/ 
         [HttpGet]
+        [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Produto>> Get()
         {
             return _context.Produtos.AsNoTracking().ToList();
