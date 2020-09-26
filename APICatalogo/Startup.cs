@@ -16,6 +16,7 @@ using APICatalogo.Services;
 using APICatalogo.Filter;
 using Microsoft.Extensions.Options;
 using APICatalogo.Extensions;
+using APICatalogo.Logging;
 
 namespace APICatalogo
 {
@@ -43,13 +44,17 @@ namespace APICatalogo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            loggerFactory.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration 
+            { 
+              LogLevel = LogLevel.Information        
+            }));
             //Tratamento de erro Middleware
             app.ConfigureExceptionHandler();
 
