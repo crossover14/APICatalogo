@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using APICatalogo.Services;
 using APICatalogo.Filter;
 using Microsoft.Extensions.Options;
+using APICatalogo.Extensions;
 
 namespace APICatalogo
 {
@@ -48,6 +49,9 @@ namespace APICatalogo
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //Tratamento de erro Middleware
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 

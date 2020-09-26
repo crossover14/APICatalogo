@@ -38,9 +38,12 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet("{id:int:min(1)}", Name = "ObterProduto")]
-        public ActionResult<Produto> Get(int id)
+        public async Task<ActionResult<Produto>> Get([FromQuery]int id)
         {
-           
+;
+           // Teste para erros...
+            // throw new Exception("Exception ao retornar produto pelo ID");
+
             var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
             if (produto == null)
             {
