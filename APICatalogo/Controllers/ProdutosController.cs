@@ -1,50 +1,40 @@
-﻿using APICatalogo.Contexto;
-using APICatalogo.Filter;
-using APICatalogo.Models;
+﻿using APICatalogo.Models;
+using APICatalogo.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace APICatalogo.Controllers
+namespace ApiCatalogo.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-
-
-        private readonly AppDbContext _context;
-        public ProdutosController(AppDbContext contexto)
+        private readonly IUnitOfWork _uof;
+        public ProdutosController(IUnitOfWork contexto)
         {
-            _context = contexto;
+            _uof = contexto;
         }
 
-        //Api/Produtos
-        [HttpGet("/primeiro")]
-        public ActionResult<Produto> Get2()
+        [HttpGet("menorpreco")]
+        public ActionResult<IEnumerable<Produto>> GetProdutosPrecos()
         {
-            return _context.Produtos.FirstOrDefault();
+            return _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
         }
 
-        //Api/Produtos/1/ 
+        // api/produtos
         [HttpGet]
-        [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            return _context.Produtos.AsNoTracking().ToList();
+            return _uof.ProdutoRepository.Get().ToList();
         }
 
-        [HttpGet("{id:int:min(1)}", Name = "ObterProduto")]
-        public ActionResult<Produto> Get([FromQuery]int id)
+        // api/produtos/1
+        [HttpGet("{id}", Name = "ObterProduto")]
+        public ActionResult<Produto> Get(int id)
         {
-            ;
-            // Teste para erros...
-            // throw new Exception("Exception ao retornar produto pelo ID");
+            var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
 
-            var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
             if (produto == null)
             {
                 return NotFound();
@@ -52,52 +42,45 @@ namespace APICatalogo.Controllers
             return produto;
         }
 
+        //  api/produtos
         [HttpPost]
         public ActionResult Post([FromBody]Produto produto)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return BadRequest(ModelState);
-            // }
+            _uof.ProdutoRepository.Add(produto);
+            _uof.Commit();
 
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
             return new CreatedAtRouteResult("ObterProduto",
                 new { id = produto.ProdutoId }, produto);
         }
+
+        // api/produtos/1
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Produto produto)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return BadRequest(ModelState);
-            // }
             if (id != produto.ProdutoId)
             {
                 return BadRequest();
-
             }
-            _context.Entry(produto).State = EntityState.Modified;
-            _context.SaveChanges();
+
+            _uof.ProdutoRepository.Update(produto);
+            _uof.Commit();
             return Ok();
-
-
         }
+
+        //  api/produtos/1
         [HttpDelete("{id}")]
         public ActionResult<Produto> Delete(int id)
         {
-            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-            if (id != produto.ProdutoId)
+            var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
+
+            if (produto == null)
             {
-                return BadRequest();
-
+                return NotFound();
             }
-            _context.Produtos.Remove(produto);
-            _context.SaveChanges();
+
+            _uof.ProdutoRepository.Delete(produto);
+            _uof.Commit();
             return produto;
-
-
-
         }
     }
 }
