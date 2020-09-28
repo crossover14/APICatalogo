@@ -1,18 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using ApiCatalogo.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
-namespace APICatalogo.Extensions
+namespace ApiCatalogo.Extensions
 {
     public static class ApiExceptionMiddlewareExtensions
     {
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app) 
+        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>
             {

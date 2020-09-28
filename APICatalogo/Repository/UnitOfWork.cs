@@ -1,12 +1,17 @@
-﻿using APICatalogo.Contexto;
+﻿using APICatalogo.Context;
+using System.Threading.Tasks;
 
-namespace APICatalogo.Repository
+namespace ApiCatalogo.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
         private ProdutoRepository _produtoRepo;
         private CategoriaRepository _categoriaRepo;
         public AppDbContext _context;
+        public UnitOfWork(AppDbContext contexto)
+        {
+            _context = contexto;
+        }
 
         public IProdutoRepository ProdutoRepository
         {
@@ -16,7 +21,7 @@ namespace APICatalogo.Repository
             }
         }
 
-        public ICategoriaRepsitory CategoriaRepository
+        public ICategoriaRepository CategoriaRepository
         {
             get
             {
@@ -24,16 +29,9 @@ namespace APICatalogo.Repository
             }
         }
 
-        public UnitOfWork(AppDbContext contexto)
+        public async Task Commit()
         {
-            _context = contexto;
-        }
-
-       
-
-        public void Commit()
-        {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public void Dispose()
@@ -41,11 +39,5 @@ namespace APICatalogo.Repository
             _context.Dispose();
         }
 
-        void IUnitOfWork.Commit()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
-
-

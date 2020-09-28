@@ -1,9 +1,11 @@
-﻿namespace APICatalogo.Repository
+﻿using System.Threading.Tasks;
+
+namespace ApiCatalogo.Repository
 {
     public interface IUnitOfWork
     {
         IProdutoRepository ProdutoRepository { get; }
-        ICategoriaRepsitory CategoriaRepository { get; }
-        void Commit();
+        ICategoriaRepository CategoriaRepository { get; }
+        Task Commit();
     }
 }

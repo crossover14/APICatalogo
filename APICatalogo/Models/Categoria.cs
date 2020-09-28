@@ -1,20 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace APICatalogo.Models
 {
-   
     [Table("Categorias")]
     public class Categoria
     {
-
         public Categoria()
         {
             Produtos = new Collection<Produto>();

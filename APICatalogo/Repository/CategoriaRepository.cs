@@ -1,19 +1,20 @@
-﻿using APICatalogo.Contexto;
+﻿using APICatalogo.Context;
 using APICatalogo.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace APICatalogo.Repository
+namespace ApiCatalogo.Repository
 {
-    public class CategoriaRepository : Repository<Categoria>, ICategoriaRepsitory
+    public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
     {
         public CategoriaRepository(AppDbContext contexto) : base(contexto)
         {
         }
 
-        public IEnumerable<Categoria> GetCategoriasProdutos()
+        public async Task<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            return Get().Include(x => x.Produtos);
+            return await Get().Include(x => x.Produtos).ToListAsync();
         }
     }
 }

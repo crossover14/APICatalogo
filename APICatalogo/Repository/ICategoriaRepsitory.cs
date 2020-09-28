@@ -1,4 +1,5 @@
-﻿using APICatalogo.Models;
+﻿using ApiCatalogo.Repository;
+using APICatalogo.Models;
 using System.Collections.Generic;
 
 namespace APICatalogo.Repository

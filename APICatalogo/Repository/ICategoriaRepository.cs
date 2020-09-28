@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace ApiCatalogo.Repository
 {
-    public interface IProdutoRepository : IRepository<Produto>
+    public interface ICategoriaRepository : IRepository<Categoria>
     {
-        Task<IEnumerable<Produto>> GetProdutosPorPreco();
+        Task<IEnumerable<Categoria>> GetCategoriasProdutos();
     }
 }

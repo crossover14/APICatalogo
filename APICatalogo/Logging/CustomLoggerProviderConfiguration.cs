@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace APICatalogo.Logging
+namespace ApiCatalogo.Logging
 {
     public class CustomLoggerProviderConfiguration
     {

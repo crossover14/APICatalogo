@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Concurrent;
 
-namespace APICatalogo.Logging
+namespace ApiCatalogo.Logging
 {
     public class CustomLoggerProvider : ILoggerProvider
     {
