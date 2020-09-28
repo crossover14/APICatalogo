@@ -1,12 +1,9 @@
 ﻿using APICatalogo.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace APICatalogo.Repository
 {
-    public interface IProdutoRepository  : IRepository<Produto>
+    public interface IProdutoRepository : IRepository<Produto>
     {
         IEnumerable<Produto> GetProdutosPorPreco();
     }
