@@ -7,10 +7,6 @@ namespace APICatalogo.Repository
         private ProdutoRepository _produtoRepo;
         private CategoriaRepository _categoriaRepo;
         public AppDbContext _context;
-        public UnitOfWork(AppDbContext contexto)
-        {
-            _context = contexto;
-        }
 
         public IProdutoRepository ProdutoRepository
         {
@@ -28,7 +24,12 @@ namespace APICatalogo.Repository
             }
         }
 
-        public ICategoriaRepsitory CategoriaRepsitory => throw new System.NotImplementedException();
+        public UnitOfWork(AppDbContext contexto)
+        {
+            _context = contexto;
+        }
+
+       
 
         public void Commit()
         {
@@ -40,6 +41,11 @@ namespace APICatalogo.Repository
             _context.Dispose();
         }
 
+        void IUnitOfWork.Commit()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
+
 

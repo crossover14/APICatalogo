@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ApiCatalogo.Controllers
+namespace APICatalogo.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
