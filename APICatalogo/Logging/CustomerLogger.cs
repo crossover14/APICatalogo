@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApiCatalogo.Logging
 {
@@ -38,7 +35,7 @@ namespace ApiCatalogo.Logging
 
         private void EscreverTextoNoArquivo(string mensagem)
         {
-            string caminhoArquivoLog = @"c:\dados\log\Macoratti_Log.txt";
+            string caminhoArquivoLog = @"E:\Aulas Macorati AsP.Net Core\dados\leandro_Log.txt";
             using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog, true))
             {
                 try
