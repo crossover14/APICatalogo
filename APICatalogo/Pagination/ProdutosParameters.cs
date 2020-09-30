@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ApiCatalogo.Pagination
 {
-    public class ProdutosParamenters
+    public class ProdutosParameters
     {
         const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;
