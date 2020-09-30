@@ -1,4 +1,5 @@
-﻿using APICatalogo.Context;
+﻿using ApiCatalogo.Pagination;
+using APICatalogo.Context;
 using APICatalogo.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -13,6 +14,14 @@ namespace ApiCatalogo.Repository
         {
         }
 
+        public IEnumerable<Produto> GetProdutos(ProdutosParamenters produtosParameters)
+        {
+            return Get()
+                .OrderBy(on => on.Nome)
+                .Skip((produtosParameters.PageNumber - 1) * produtosParameters.PageSize)
+                .Take(produtosParameters.PageSize)
+                .ToList();
+        }
         public async Task<IEnumerable<Produto>> GetProdutosPorPreco()
         {
             return await Get().OrderBy(c => c.Preco).ToListAsync();
