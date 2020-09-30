@@ -9,6 +9,6 @@ namespace ApiCatalogo.DTOs
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public string ConfirmaPassWord { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

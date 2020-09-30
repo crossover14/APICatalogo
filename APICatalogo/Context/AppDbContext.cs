@@ -8,7 +8,7 @@ namespace APICatalogo.Context
 {
     public class AppDbContext : IdentityDbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) 
             : base(options)
         { }
         public AppDbContext()
