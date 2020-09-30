@@ -4,6 +4,7 @@ using APICatalogo.Context;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,10 @@ namespace APICatalogo
 
             services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                  .AddEntityFrameworkStores<AppDbContext>()
+                  .AddDefaultTokenProviders();
 
             services.AddControllers()
                     .AddNewtonsoftJson(options =>
@@ -74,6 +79,9 @@ namespace APICatalogo
 
             //adiciona o middleware que habilita a autorizacao
             app.UseAuthorization();
+
+            //adiciona o middleware de autenticacao
+            app.UseAuthentication();
 
             //Adiciona o middleware que executa o endpoint 
             //do request atual
