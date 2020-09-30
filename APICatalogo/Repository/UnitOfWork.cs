@@ -1,5 +1,4 @@
 ﻿using APICatalogo.Context;
-using System.Threading.Tasks;
 
 namespace ApiCatalogo.Repository
 {
@@ -29,9 +28,9 @@ namespace ApiCatalogo.Repository
             }
         }
 
-        public async Task Commit()
+        public void Commit()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Dispose()

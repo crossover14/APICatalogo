@@ -1,10 +1,8 @@
 ﻿using ApiCatalogo.Pagination;
 using APICatalogo.Context;
 using APICatalogo.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApiCatalogo.Repository
 {
@@ -22,7 +20,7 @@ namespace ApiCatalogo.Repository
             //    .Take(produtosParameters.PageSize)
             //    .ToList();
 
-            return PagedList<Produto>.ToPagedList(Get().OrderBy(on => on.ProdutoId),
+            return PagedList<Produto>.ToPagedList(Get().OrderBy(on => on.ProdutoId), 
                 produtosParameters.PageNumber, produtosParameters.PageSize);
         }
 
