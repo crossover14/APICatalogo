@@ -30,6 +30,9 @@ namespace APICatalogo
         // Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
+           
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -104,9 +107,11 @@ namespace APICatalogo
 
             //adiciona o middleware de autenticacao
             app.UseAuthentication();
+           
 
             //adiciona o middleware que habilita a autorizacao
             app.UseAuthorization();
+            app.UseCors(opt => opt.AllowAnyOrigin());
 
             //Adiciona o middleware que executa o endpoint 
             //do request atual
