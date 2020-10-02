@@ -72,6 +72,7 @@ namespace APICatalogo
                          Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
                  });
 
+            
             services.AddControllers()
                     .AddNewtonsoftJson(options =>
                     {
